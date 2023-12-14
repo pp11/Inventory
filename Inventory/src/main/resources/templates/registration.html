@@ -1,10 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>registration</title>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <style type="text/css">
+        body {
+            background-color: rgb(128, 255, 255);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #registration-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type=text], input[type=password], input[type=number], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type=radio] {
+            margin-left: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-	registration
+    <div id="registration-form">
+        <h1>User Registration</h1>
+        <label for="username">Full name:</label>
+        <input type="text" id="username" required>
+
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" required>
+
+              <label for="Password">Password:</label>
+        <input type="text" id="Password" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+
+<!--        <label>Gender:</label>-->
+<!--        <input type="radio" name="gender" value="Male" required>Male-->
+<!--        <input type="radio" name="gender" value="Female" required>Female-->
+
+        <label for="blood">blood:</label>
+        <input type="number" id="blood">
+
+        <label for="address">Address:</label>
+        <textarea rows="5" id="address"></textarea>
+        
+  		<label for="phone">phone:</label>
+        <input type="text" id="phone" required>
+        <br/>
+        <button type="button" onclick="registerUser()">Register</button>
+    </div>
+
+    <script>
+        function registerUser() {
+            var username = $("#username").val();
+            var email = $("#email").val();           
+            var Password = $("#Password").val();
+            var age = $("#age").val();
+           // var gender = $("input[name='gender']:checked").val();
+            var phone = $("#phone").val();
+            var address = $("#address").val();
+
+            var data = {
+                username: username,
+                email: email,               
+                Password: Password,
+                age: age,                
+                phone: phone,
+                address: address
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/register",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(response) {
+                    //console.log(response);
+                    alert(response);
+                    // Process the response from the server
+                }
+            });
+        }
+    </script>
 </body>
 </html>
