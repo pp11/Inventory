@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/back-1.jpg'); /* Initial background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-image 1s;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-container input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+		
+        <h2 th:text="${pageName}"></h2>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button class="btn btn-primary" id="login-button">Login</button>
+    </div>
+
+    <script>
+        const backgroundImages = [
+            'images/back-1.avif', // Replace with your image URLs
+            'images/back-2.avif',
+            'images/back-3.avif',
+            'images/back-4.jpg',
+            'images/back-5.jpg'
+        ];
+
+        let currentIndex = 0;
+
+        <!--function changeBackgroundImage() {
+            document.body.style.backgroundImage = `url('${backgroundImages[currentIndex]}')`;
+            currentIndex = (currentIndex + 1) % backgroundImages.length;
+        }
+        setInterval(changeBackgroundImage, 2000);-->
+        
+        const loginButton = document.getElementById('login-button');
+        loginButton.addEventListener('click', async () => {
+            const userName = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/authenticate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userName, password }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Login failed.');
+                }
+
+                const data = await response.json();
+                const { login, token } = data;
+                if (login==="success" && token) {
+                    localStorage.setItem('token', token);
+                    window.location.href = "/index";
+                } else {
+                    alert('Login failed.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Login failed.');
+            }
+        });
+    </script>
+</body>
+</html>
