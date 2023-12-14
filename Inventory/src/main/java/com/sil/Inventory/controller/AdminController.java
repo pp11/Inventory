@@ -13,4 +13,10 @@ public class AdminController {
 		model.addAttribute("pageName", "Welcome to Login Page");
         return "login";
     }
+	
+	@GetMapping("/signUp")
+    public String showRegistrationPage(Model model) {
+	//	model.addAttribute("pageName", "Welcome to Login Page");
+        return "registration";
+    }
 }
