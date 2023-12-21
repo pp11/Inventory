@@ -36,6 +36,12 @@ public class AdminController {
         return "registration";
     }
 	
+	@GetMapping("/index2")
+    public String showIndexPage(Model model) {
+	//	model.addAttribute("pageName", "Welcome to Login Page");
+        return "general";
+    }
+	
 	
 		
 	
