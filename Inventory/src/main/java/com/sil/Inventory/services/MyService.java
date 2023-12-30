@@ -2,6 +2,7 @@ package com.sil.Inventory.services;
 
 import org.springframework.stereotype.Service;
 
+import com.sil.Inventory.model.LoginModel;
 import com.sil.Inventory.model.UserInfoModel;
 import com.sil.Inventory.util.BaseResponse;
 
@@ -10,7 +11,7 @@ public interface MyService {
 	BaseResponse insertUserInfo(UserInfoModel request);
 	
 	
-	
+	BaseResponse loginUser(LoginModel request);
 	
 
 }

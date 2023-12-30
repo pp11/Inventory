@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 import com.sil.Inventory.entity.UserInfo;
+import com.sil.Inventory.model.LoginModel;
 import com.sil.Inventory.model.UserInfoModel;
 import com.sil.Inventory.repository.UserRepo;
 import com.sil.Inventory.services.MyService;
@@ -45,6 +46,26 @@ public class MyServiceImpl implements MyService{
 	  
 	  
 	  }
+
+	@Override
+	public BaseResponse loginUser(LoginModel request) {
+
+		BaseResponse baseresponse=new BaseResponse();
+		UserInfo user=userRepo.findUserByUserName(request.getUsername());
+		
+		if (request.getUsername()==user.getUsername()){
+			
+			if(request.getPassword()==user.getPassword()) {
+				baseresponse.setMessage("success");
+			}
+		}
+		else
+		{
+			baseresponse.setMessage("error");
+		}
+		
+		return baseresponse;
+	}
 	 
 
 }

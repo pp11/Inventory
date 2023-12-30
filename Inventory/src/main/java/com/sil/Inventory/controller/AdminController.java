@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.sil.Inventory.model.LoginModel;
 import com.sil.Inventory.model.UserInfoModel;
 import com.sil.Inventory.services.MyService;
-import com.sil.Inventory.util.BaseResponse;
+
 
 
 
@@ -26,24 +27,36 @@ public class AdminController {
 	
 	@GetMapping("/login")
     public String showLoginPage(Model model) {
-		model.addAttribute("pageName", "Welcome to Login Page");
+		//model.addAttribute("pageName", "Welcome to Login Page");
         return "login";
     }
 	
-	@GetMapping("/signUp")
+	@GetMapping("/home")
     public String showRegistrationPage(Model model) {
 	//	model.addAttribute("pageName", "Welcome to Login Page");
         return "registration";
     }
 	
-	@GetMapping("/index2")
+	@GetMapping("/signUp")
     public String showIndexPage(Model model) {
 	//	model.addAttribute("pageName", "Welcome to Login Page");
-        return "general";
+        return "register";
     }
 	
 	
-		
+	@PostMapping("/myLogin")	
+	public ResponseEntity<String> myLogin(@RequestBody LoginModel request)
+	{
+		if(request.getUsername()==null) {
+			return ResponseEntity.status(HttpStatus.OK).body("Invalid User");
+		}
+		else{
+			
+			myService.loginUser(request);
+			return ResponseEntity.status(HttpStatus.OK).body("login Success");
+			
+		} 
+	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> addUser(@RequestBody UserInfoModel request) {
